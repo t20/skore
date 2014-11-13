@@ -17,7 +17,7 @@ def index():
     return render_template('index.html', boards=boards)
 
 
-@app.route('/board/new')
+@app.route('/board/new', methods=['GET', 'POST'])
 def new_board():
     if request.method == 'GET':
         return render_template('board_form.html')

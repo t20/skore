@@ -17,7 +17,7 @@ class Item(BaseModel):
 
 
 def get_boards(limit=10):
-    return Board.objects.all().limit(limit).order("-created")
+    return Board.objects.all().limit(limit)
 
 
 def get_board(board_id):
