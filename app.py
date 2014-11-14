@@ -1,17 +1,26 @@
 import os
 import json
+import redisco
+import urlparse
 
 from flask import Flask, render_template, request, redirect, url_for, \
-flash, jsonify
+    flash, jsonify
 
 from models import Board, Item, Response
-from models import get_boards, get_board, get_items, get_response
+from models import get_boards, get_board, get_items, get_response, \
+    get_responses
 
 
 app = Flask(__name__)
 app.config.from_object('settings.Config')
 app.secret_key = app.config['APP_SECRET_KEY']
 
+redis_url = os.environ.get('REDISCLOUD_URL', None)
+if redis_url:
+    redis_url = urlparse.urlparse(redis_url)
+    redisco.connection_setup(host=redis_url.hostname, port=redis_url.port, db=0, password=redis_url.password)
+else:
+    redisco.connection_setup(host='localhost', port=6379, db=0)
 
 @app.route('/')
 def index():
