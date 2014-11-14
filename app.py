@@ -4,8 +4,8 @@ import json
 from flask import Flask, render_template, request, redirect, url_for, \
 flash, jsonify
 
-from models import Board, Item
-from models import get_boards, get_board, get_items
+from models import Board, Item, Response
+from models import get_boards, get_board, get_items, get_response
 
 
 app = Flask(__name__)
@@ -49,6 +49,39 @@ def board(board_id):
     board = get_board(board_id)
     items = get_items(board_id)
     return render_template('board.html', board=board, items=items)
+
+
+@app.route('/response/add', methods=['POST'])
+def add_response():
+    username = request.form.get('username')
+    username = username or 'anonymous'
+    board_id = request.form.get('board_id')
+    items = request.form.getlist('item')
+
+    print 'Items: {} // {}'.format(type(items), items)
+    items = [int(x) for x in items if x]
+    print 'Items: {} // {}'.format(type(items), items)
+
+    response = Response(username=username, board_id=int(board_id),
+            items=items)
+    saved = response.save()
+
+    print 'saved response? : {}'.format(saved)
+    if saved == True:
+        flash('Response saved. Thanks {}.'.format(username))
+    else:
+        flash('Could not save response')
+
+    return redirect(url_for('response', response_id=response.id))
+
+
+@app.route('/response/<response_id>')
+def response(response_id):
+    response = get_response(response_id)
+    board = get_board(response.board_id)
+    items = get_items(response.board_id)
+    return render_template('response.html', response=response,
+            board=board, items=items)
 
 
 @app.route('/login')
