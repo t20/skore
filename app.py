@@ -9,6 +9,8 @@ from models import get_boards, get_board, get_items
 
 
 app = Flask(__name__)
+app.config.from_object('settings.Config')
+app.secret_key = app.config['APP_SECRET_KEY']
 
 
 @app.route('/')
@@ -24,18 +26,27 @@ def new_board():
     # else POST
     name = request.form.get('name')
     desc = request.form.get('desc', '')
-    items = request.form.get('items')
+    items = request.form.getlist('item')
 
     b = Board(name=name, desc=desc)
     saved = b.save()
     
+    board_id = int(b.id)
+    for item in items:
+        if not item:
+            continue
+        i = Item(name=item, board_id=board_id)
+        saved = i.save()
+        # print 'saved?', saved
+        # print 'Item: {} - saved? {}'.format(item, saved)
+
     flash('New board created.')
-    return redirect(url_for('board', board_id=b.id))
+    return redirect(url_for('board', board_id=int(b.id)))
 
 
 @app.route('/board/<board_id>')
-def board():
-    board = get_board(board)
+def board(board_id):
+    board = get_board(board_id)
     items = get_items(board_id)
     return render_template('board.html', board=board, items=items)
 
@@ -43,6 +54,16 @@ def board():
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 
 if __name__ == '__main__':

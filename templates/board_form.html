@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Create a new SKORE sheet!</h2>
+  
+  <form action="" method="POST" accept-charset="utf-8">
+    <label for="name">Name</label><input type="text" name="name" value="" id="name">
+    <label for="description">Description</label><input type="text" name="desc" value="" id="desc">
+    
+      <h3>Add items:</h3>
+      
+      <table border="0" cellspacing="5" cellpadding="5">
+        <tr><th>#</th><th>What?</th></tr>
+        {% for i in range(1, 11) %}
+          <tr>
+            <td>{{ i }}</td>
+            <td><input type="text" name="item" value="" id="item"></td>
+          </tr>
+        {% endfor %}
+      </table>
+
+    <p><input type="submit" value="Continue &rarr;"></p>
+  </form>
+
+
+{% endblock content %}

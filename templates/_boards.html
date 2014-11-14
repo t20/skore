@@ -1,0 +1,8 @@
+<h2>{{ name }}</h2>
+<h3>{{ desc }}</h3>
+
+{% for item in items %}
+  <label for="item">{{item}}</label><input type="checkbox" name="" value="{{item}}" id="item">
+{% endfor %}
+
+<input type="button" name="skore" value="SKORE ME" id="skore">

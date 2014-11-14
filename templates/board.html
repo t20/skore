@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2> SKORE sheet!</h2>
+  
+  <h2>{{ board.name }}</h2>
+  <h3>{{ board.desc }}</h3>
+
+  <div class="row">
+
+    <div class="span6">
+      <table border="0" cellspacing="5" cellpadding="5">
+        <tr><th>#</th><th>What?</th><th></th></tr>
+        {% for item in items %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td><input type="text" name="item" value="{{ item.name }}" id="item" readonly></td>
+            <td><input type="checkbox" name="" value="{{item.name}}" id="item" class="scorable"></tdwhat
+          </tr>
+        {% endfor %}
+      </table>
+
+      <input type="button" name="skore" value="SKORE ME" id="skore">
+    </div>
+    <div class="span6">
+        <div id="score">
+            <p> <span class="ticked"></span> / <span class="total"></span></p>
+        </div>
+    </div>
+
+  </div>
+{% endblock content %}
