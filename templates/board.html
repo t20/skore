@@ -19,23 +19,24 @@
               </tr>
             {% endfor %}
           </table>
-
-          <label for="name">Your Name:</label><input type="text" name="username" value="" id="username">
-
-          <input type="hidden" name="board_id" value="{{board.id}}" id="board_id">
-          <input type="submit" name="skore" value="SKORE ME" id="skore">
         </div>
       </div>
 
       <div class="span6">
-        <div class="score">
+        <h3 class="score">
             <p> <span class="ticked"></span> / <span class="total"></span></p>
+        </h3>
+        <div>
+          <label for="name">Your Name:</label><input type="text" name="username" value="" id="username">
+
+          <input type="hidden" name="board_id" value="{{board.id}}" id="board_id">
+          <div><input type="submit" name="skore" value="SKORE ME" id="skore"></div>
         </div>
       </div>
     </form>
   </div>
 
-  <div class="row">
+  <div class="row responses">
     {% if responses %}
       <h3>Recent responses for this board:</h3>
       {% for response in responses %}

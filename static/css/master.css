@@ -1,9 +1,21 @@
-.board {
-  display: block;
-}
-
 #footer {
   border-top: 1px solid #ddd;
   padding:20px 0px;
   margin:20px 0px;
+}
+
+.responses {
+  margin: 70px 0;
+}
+
+.responses .response_container {
+  margin: 20px 10px;
+  background: #fafafa;
+  padding: 20px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+
+.well {
+  background-color:#fafafa;
 }
