@@ -2,24 +2,29 @@ from redisco import models
 
 
 class BaseModel(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    pass
 
 
 class Board(BaseModel):
     name = models.Attribute(required=True)
     desc = models.Attribute(required=False)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
 
 class Item(BaseModel):
     board_id = models.IntegerField(required=True)
     name = models.Attribute(required=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
 
 class Response(BaseModel):
     username = models.Attribute(required=True)
     board_id = models.IntegerField(required=True)
     items = models.ListField(int)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
 
 def get_boards(limit=10):
@@ -35,7 +40,7 @@ def get_items(board_id):
 
 
 def get_responses(board_id, limit=3):
-    return Response.objects.filter(board_id=board_id).limit(limit)
+    return Response.objects.filter(board_id=board_id).order('-created')
 
 
 def get_response(response_id):
