@@ -11,6 +11,10 @@
 
 <div class="row">
 <h3>Recent Boards</h3>
-    {% include "_boards.html" %}
+
+  {% for board in boards %}
+    {% include "_board.html" %}
+  {% endfor %}
+
 </div>
 {% endblock %}
