@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-  
+
+<div class="response_container">
+
   <h2>{{ response.username }}'s SKORE Sheet</h2>
   <h2>{{ board.name }} - {{ board.desc }}</h3>
   
@@ -29,4 +31,5 @@
 
   </div>
 
+</div>
 {% endblock content %}

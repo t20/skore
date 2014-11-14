@@ -6,10 +6,11 @@
   <h3>{{ board.desc }}</h3>
 
   <div class="row">
-    <div class="span6">
-      <form action="/response/add" method="post" accept-charset="utf-8">
+    <form action="/response/add" method="post" accept-charset="utf-8" class="response_form response_container">
+      <div class="span6">
+        <div class="well">
           <table border="0" cellspacing="5" cellpadding="5">
-            <tr><th>#</th><th>What?</th><th></th></tr>
+            <tr><th></th><th>What?</th><th></th></tr>
             {% for item in items %}
               <tr>
                 <td>{{ loop.index }}</td>
@@ -23,15 +24,26 @@
 
           <input type="hidden" name="board_id" value="{{board.id}}" id="board_id">
           <input type="submit" name="skore" value="SKORE ME" id="skore">
-      </form>
-    </div>
+        </div>
+      </div>
 
-    <div class="span6">
-        <div id="score">
+      <div class="span6">
+        <div class="score">
             <p> <span class="ticked"></span> / <span class="total"></span></p>
         </div>
-    </div>
-
+      </div>
+    </form>
   </div>
+
+  <div class="row">
+    {% if responses %}
+      <h3>Recent responses for this board:</h3>
+      {% for response in responses %}
+        {% include "_response.html" %}
+      {% endfor %}
+    {% endif %}
+    
+  </div>
+
 
 {% endblock content %}

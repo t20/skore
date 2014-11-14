@@ -11,6 +11,8 @@ from models import get_boards, get_board, get_items, get_response, \
     get_responses
 
 
+# My flask app, config
+
 app = Flask(__name__)
 app.config.from_object('settings.Config')
 app.secret_key = app.config['APP_SECRET_KEY']
@@ -21,6 +23,10 @@ if redis_url:
     redisco.connection_setup(host=redis_url.hostname, port=redis_url.port, db=0, password=redis_url.password)
 else:
     redisco.connection_setup(host='localhost', port=6379, db=0)
+
+
+# routes start here
+
 
 @app.route('/')
 def index():
@@ -57,7 +63,9 @@ def new_board():
 def board(board_id):
     board = get_board(board_id)
     items = get_items(board_id)
-    return render_template('board.html', board=board, items=items)
+    responses = get_responses(board_id)
+    return render_template('board.html', board=board, items=items,
+            responses=responses)
 
 
 @app.route('/response/add', methods=['POST'])
@@ -67,15 +75,15 @@ def add_response():
     board_id = request.form.get('board_id')
     items = request.form.getlist('item')
 
-    print 'Items: {} // {}'.format(type(items), items)
+    # print 'Items: {} // {}'.format(type(items), items)
     items = [int(x) for x in items if x]
-    print 'Items: {} // {}'.format(type(items), items)
+    # print 'Items: {} // {}'.format(type(items), items)
 
     response = Response(username=username, board_id=int(board_id),
             items=items)
     saved = response.save()
 
-    print 'saved response? : {}'.format(saved)
+    # print 'saved response? : {}'.format(saved)
     if saved == True:
         flash('Response saved. Thanks {}.'.format(username))
     else:

@@ -1,0 +1,13 @@
+<div class="span4 response_container">
+  <h3>{{ response.username }} <p class="score"> <span class="ticked"></span> / <span class="total"></span></p></h3>      
+  <input type="hidden" name="response_item_ids" value="{{response.items}}" id="response_item_ids">
+  <table border="0" cellspacing="5" cellpadding="5">
+  {% for item in items %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td><input type="text" value="{{ item.name }}" readonly></td>
+      <td><input type="checkbox" name="item" value="{{item.id}}" id="{{ item.id }}" class="scorable" disabled=disabled></td>
+    </tr>
+  {% endfor %}
+  </table>
+</div>
