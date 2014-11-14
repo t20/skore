@@ -19,7 +19,7 @@ class Item(BaseModel):
 class Response(BaseModel):
     username = models.Attribute(required=True)
     board_id = models.IntegerField(required=True)
-    items = models.ListField(int, required=True)
+    items = models.ListField(int)
 
 
 def get_boards(limit=10):
